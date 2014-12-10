@@ -221,7 +221,7 @@ var schoeu = (function(){
             }
             return {left:l,top:t};
         },
-        addEvent:function(el,type,fn){
+        addEvent:function(type,fn){
             var el = this[0];
             if(el.addEventListener){
                 el.addEventListener(type,fn,false);
@@ -229,7 +229,7 @@ var schoeu = (function(){
                 el.attachEvent("on"+type,fn);
             }
         },
-        removeEvent:function(el,type,fn){
+        removeEvent:function(type,fn){
             var el = this[0];
             if(el.addEventListener){
 
