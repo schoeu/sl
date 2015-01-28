@@ -172,8 +172,8 @@
         }
     };
 
-    $.fn.preEle = function(){
-        var el = this[0];
+    $.fn.preEle = function(el){
+        //var el = this[0];
         if(typeof el.previousElementSibling == "object"){
             return el.previousElementSibling;
         }else{
@@ -199,12 +199,12 @@
     };
 
     $.fn.preSiblings = function(){
-        var el = this[0];
+        var el = this[0],a = [];
         if(!el) return [];
-        var a = [],pre = el.preEle();
-        while(pre){
-            a.unshift(pre);
-            pre = pre.preEle();
+        el = this.preEle(el);
+        while(el){
+            a.unshift(el);
+            el = this.preEle(el);
         }
         return a;
     };
@@ -275,6 +275,7 @@
         return {left:l,top:t};
     };
 
+    //simple event bind
     $.fn.addEvent = function(type,fn){
         var el = this[0];
         if(el.addEventListener){
@@ -284,6 +285,12 @@
         }
     };
 
+    $.fn.text = function(text){
+        this.each(function(){
+            this.innerHTML = text;
+        });
+    };
+
     $.fn.removeEvent = function(type,fn){
         var el = this[0];
         if(el.removeEventListener){
@@ -291,6 +298,26 @@
         }else if(el.detachEvent){
             el.detachEvent("on"+type,fn);
         }
+    }
+
+    $.fn.bind = function(type,fn){
+        this.each(function(){
+            if(this.addEventListener){
+                this.addEventListener(type,fn,false);
+            }else if(this.attachEvent){
+                this.attachEvent("on"+type,fn);
+            }
+        });
+    }
+
+    $.fn.unbind = function(type,fn){
+        this.each(function(){
+            if(this.removeEventListener){
+                this.removeEventListener(type,fn,false);
+            }else if(this.detachEvent){
+                this.detachEvent("on"+type,fn);
+            }
+        });
     }
 
     /********  instance funciton  end*********/
@@ -403,17 +430,76 @@
         }
     };
 
-    $.ajax = function(){
+    /**
+     *  0：请求未初始化（还没有调用 open()）。
+        1：请求已经建立，但是还没有发送（还没有调用 send()）。
+        2：请求已发送，正在处理中（通常现在可以从响应中获取内容头,调用了send()）。
+        3：请求在处理中；通常响应中已有部分数据可用了，但是服务器还没有完成响应的生成。
+        4：响应已完成；您可以获取并使用服务器的响应了。
+     ***/
+    $.ajax = function(obj){
+        var url,dataType,jsonpCallback,type,success,error,async,returnData,timeout;
+        if(toString.call(obj) == '[object Object]'){
+            url = obj.url;
+            dataType = obj.dataType || '';
+            jsonpCallback = obj.jsonpCallback || '';
+            type = obj.type || 'get';
+            success = obj.success;
+            error = obj.error;
+            async = obj.async || true;
+            tineout = obj.timeout || 200000;
+        }else {
+            console.error('$.ajax method required object arguments.');
+        }
+
         var xhr = null;
         try{
             xhr = new XMLHttpRequest();
         }catch(e){
-            xhr = new ActiveXObject("")
+            xhr = new ActiveXObject('Microsoft.XMLHTTP');
         }
-    }
+
+        if(/jsonp/i.test(dataType)){
+            var scriptEle = document.createElement('script');
+            scriptEle.type = 'text/javascript';
+            scriptEle.src = url;
+
+            var jsonpData = null;
+            document.getElementsByTagName('head')[0].appendChild(scriptEle);
+            var callBackFuntionName = /callback=(\w+)/i.exec(url);
+            (function(jsonpData){
+                arguments.callee.caller.name = callBackFuntionName[1];
+                try{
+                    var returnJSONObject = JSON.parse(jsonpData);
+                    success.call(xhr,returnJSONObject,xhr);
+                }catch(parseErr){
+                    error.call(xhr,xhr,'parseerror',parseErr);
+                }
+            })();
+
+
+        }else{
+            xhr.open(type,url,async);
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4){
+                    if(xhr.status == 200 || xhr.status == 304){
+                        returnData = xhr.responseText;
+                        success.call(this,returnData,'success',this);
+                    }else{
+                        error.call(xhr,this,'errror',xhr.statusText);
+                    }
+                }
+            };
+            xhr.timeout = timeout;
+            xhr.ontimeout = function(){
+                xhr.abort();
+                error.call(this,this,'errror',xhr.statusText);
+            };
+            xhr.send(null);
+        }
+    };
 
     window.$ === undefined && (window.$ = $);
 
 })(window);
-
 
