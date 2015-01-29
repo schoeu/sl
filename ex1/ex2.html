@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+    <p id="pEle">
+        <span>text</span>
+        <b>other text</b>
+    </p>
+    <p>second line..</p>
+<script type="text/javascript" src="../src/sLib.js"></script>
+<script type="text/javascript">
+    //$("#pEle").setCss("background","red");
+    /*$("#pEle").addEvent("click",function(){
+        alert("click event..");
+    });*/
+
+    $.ajax({
+        url:'http://api2.huashangq.com/api/information/get_param_returnJsonp?param={"main":{"querytype":"1","enditem":"0","startitem":"0","pageitem":"10"},"extend":{"version":"1.7","terminal":"1","token":""}}&callback=test&path=api/information/get_user_xiangyis',
+        //url:'testJSON.js',
+        /*dataType:'jsonp',
+        jsonpCallback:'test',*/
+        success:function(x,d,s){
+            x;
+           //$('b').text(x);
+        },
+        error:function(b,n,m){
+            b,n,m;
+        }
+    });
+
+
+
+</script>
+</body>
+</html>
