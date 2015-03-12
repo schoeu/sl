@@ -430,6 +430,142 @@
         }
     };
 
+    $.isArray = function(arr){
+        return arr != null && typeof arr === "object" &&
+            "splice" in arr && "join" in arr;
+    };
+
+    $.isNaN = function(obj){
+        return obj !== obj;
+    };
+
+    $.isNull = function(obj){
+        return obj === null;
+    };
+
+    $.isUndefined = function(obj){
+        return onj === void 0;
+    };
+
+    $.isWindow = function(obj){
+        var f1 = obj == document && document != window, //IE5678
+        //IE9+ FF3.6~ OPERA10
+            f2 = Object.prototype.toString.call(obj).indexOf("Window")>-1,
+            //CHROME 5.0 new opera
+            f3 = Object.prototype.toString.call(obj) == "object global";
+            return f1 || f2 || f3;
+    };
+
+    $.isPlainObject = function(obj){
+        return obj && typeof  obj === "object" &&
+            Object.getPrototypeOf(obj) === Object.prototype;
+    };
+
+    //string functions
+    $.contains = function(target,it){
+        //可换为lastIndexOf search
+        return target.indexOf(it) != -1;
+    };
+
+    $.startsWith = function(target,str,ignorecase){
+        var startS = target.substr(0,str.length);
+        return ignorecase ? startS.toLowerCase() === str.toLowerCase()
+            : startS === str;
+    };
+
+    $.endsWith = function(target,str,ignorecase){
+        var end = target.substring(target.length - str.length);
+        return ignorecase ? end.toLowerCase() === str.toLowerCase()
+            : end === str;
+    };
+
+    //repeat repeat("ruby",2) "rubyruby"
+    $.repeat = function(target,n){
+        return Array.prototype.join.call({length:n+1},target);
+    };
+
+    //转驼峰规则
+    $.camelize = function(target){
+        if(target.indexOf('-') < 0 && target.indexOf('_') < 0){
+            return target;
+        }
+        return target.replace(/[-_][^-_]/g,function(match){
+            return match.charAt(1).toUpperCase();
+        })
+    };
+    //转换为下划线风格
+    $.underscored = function(target){
+        return target.replace(/([a-z\d])([A-Z])/g,'$1_$2').
+            replace(/\-/g,'_').toLowerCase();
+    };
+    //转换为连字符风格
+    $.dasherize = function(target){
+        return $.underscored(target).replace(/_/g,'-');
+    };
+    //转换为首字母大写
+    $.capitalize = function(target){
+        return target.charAt(0).toUpperCase()
+            + target.substring(1).toLowerCase();
+    };
+
+
+
+    //移除字符串中的html标签，但这个方法有缺陷，如果里面有script标签，
+    // 会把这些不该显示出来的脚本也显示出来。
+    $.stripTags = function(target){
+        return String(target || '').replace(/<[^>]+>/g,'');
+    };
+    //stripScript方法：移除字符串中所有的script标签，
+    // 此方法应在stripTags之前调用
+    $.stripScripts = function(target){
+        return String(target || '')
+            .replace(/<script[^>]*>([\S\s]*?)<\/script>]/img,'')
+    };
+
+    //将字符串经过html转义得到适合在页面中显示的内容
+    $.escapeHTML = function(target){
+        return target.replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;')
+            .replace(/'/g,'&#39;');
+    };
+    //将字符串中的html实体字符还原为对应字符。
+    $.unescapeHTML = function(target){
+        return target.replace(/&quot;/g,'"')
+            .replace(/&lt;/g,'<')
+            .replace(/&gt;/g,'>')
+            .replace(/&amp;/g,'&')
+            .replace(/&#([\d]+);/g,function($0,$1){
+                return String.fromCharCode(parseInt($,10));
+            });
+    };
+
+    //format("Result is #{0},#{1}",22,33)
+    //format("Result is #{name},#{sex}",{name:22,sex:man})
+    $.format = function(str,object){
+        var array = Array.prototype.slice.call(arguments,1);
+        return str.replace(/\\?\#{([^{}]+)}\}/gm,function(match,name){
+            if(match.charAt(0) == '\\'){
+                return match.slice(name);
+            }
+            var index = Number(name);
+            if(index >= 0){
+                return array[index];
+            }
+            if(object && object[name] != void 0){
+                return object[name];
+            }
+            return '';
+        })
+    };
+
+
+    //repeat repeat("ruby",2) "rubyruby"
+    function repeat(target,n){
+        return Array.prototype.join.call({length:n+1},target);
+    }
+
     /**
      *  0：请求未初始化（还没有调用 open()）。
         1：请求已经建立，但是还没有发送（还没有调用 send()）。
