@@ -298,7 +298,7 @@
         }else if(el.detachEvent){
             el.detachEvent("on"+type,fn);
         }
-    }
+    };
 
     $.fn.bind = function(type,fn){
         this.each(function(){
@@ -308,7 +308,7 @@
                 this.attachEvent("on"+type,fn);
             }
         });
-    }
+    };
 
     $.fn.unbind = function(type,fn){
         this.each(function(){
@@ -318,7 +318,35 @@
                 this.detachEvent("on"+type,fn);
             }
         });
-    }
+    };
+
+    // merge 函数
+    $.extend = function () {
+        var idx = 0;
+        var deep = false;
+        var temp = {};
+        var tar = arguments[idx] || {};
+        if (typeof arguments[idx] === 'boolean') {
+            tar = arguments[++idx];
+            deep = arguments[idx];
+        }
+
+        while(temp = arguments[++idx]) {
+            if ($.isPlainObject(temp)) {
+                for (var i in temp) {
+                    var item = temp[i];
+                    if (deep) {
+                        tar[i] = item;
+                    }
+                    else if (tar[i] === undefined){
+                        tar[i] = item;
+                    }
+                }
+            }
+        }
+        return tar;
+    };
+
 
     /********  instance funciton  end*********/
 
@@ -444,16 +472,16 @@
     };
 
     $.isUndefined = function(obj){
-        return onj === void 0;
+        return obj === void 0;
     };
 
     $.isWindow = function(obj){
         var f1 = obj == document && document != window, //IE5678
-        //IE9+ FF3.6~ OPERA10
+            //IE9+ FF3.6~ OPERA10
             f2 = Object.prototype.toString.call(obj).indexOf("Window")>-1,
             //CHROME 5.0 new opera
             f3 = Object.prototype.toString.call(obj) == "object global";
-            return f1 || f2 || f3;
+        return f1 || f2 || f3;
     };
 
     $.isPlainObject = function(obj){
@@ -561,11 +589,6 @@
     };
 
 
-    //repeat repeat("ruby",2) "rubyruby"
-    function repeat(target,n){
-        return Array.prototype.join.call({length:n+1},target);
-    }
-
     /**
      *  0：请求未初始化（还没有调用 open()）。
         1：请求已经建立，但是还没有发送（还没有调用 send()）。
@@ -638,4 +661,3 @@
     window.$ === undefined && (window.$ = $);
 
 })(window);
-
