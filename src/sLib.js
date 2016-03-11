@@ -231,8 +231,6 @@
             + target.substring(1).toLowerCase();
     };
 
-
-
     //移除字符串中的html标签，但这个方法有缺陷，如果里面有script标签，
     // 会把这些不该显示出来的脚本也显示出来。
     $.stripTags = function(target){
