@@ -118,7 +118,10 @@
     };
 
     $.getUrlParam = function(s){
-        s = s || "",r = /([^?=&]+)=([^?=&]+)/g,obj={};
+        var r = /([^?=&]+)=([^?=&]+)/g;
+        var obj={};
+        var a;
+        s = s || "",
         while(a = r.exec(s)){
             obj[a[1]] = a[2];
         }
