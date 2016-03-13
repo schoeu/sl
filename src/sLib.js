@@ -118,7 +118,10 @@
     };
 
     $.getUrlParam = function(s){
-        s = s || "",r = /([^?=&]+)=([^?=&]+)/g,obj={};
+        var r = /([^?=&]+)=([^?=&]+)/g;
+        var obj={};
+        var a;
+        s = s || "";
         while(a = r.exec(s)){
             obj[a[1]] = a[2];
         }
@@ -234,7 +237,9 @@
     //移除字符串中的html标签，但这个方法有缺陷，如果里面有script标签，
     // 会把这些不该显示出来的脚本也显示出来。
     $.stripTags = function(target){
-        return String(target || '').replace(/<[^>]+>/g,'');
+        // 把script标签替换为空
+        // 把textarea文本域标签替换为空
+        return String(target || '').replace(/<(script|textarea)>([\s\S]+?)<\/\1>/gi, '').replace(/<[^>]+>/g,'');
     };
     //stripScript方法：移除字符串中所有的script标签，
     // 此方法应在stripTags之前调用
@@ -264,21 +269,50 @@
 
     //format("Result is #{0},#{1}",22,33)
     //format("Result is #{name},#{sex}",{name:22,sex:man})
-    $.format = function(str,object){
-        var array = Array.prototype.slice.call(arguments,1);
-        return str.replace(/\\?\#{([^{}]+)}\}/gm,function(match,name){
-            if(match.charAt(0) == '\\'){
-                return match.slice(name);
-            }
-            var index = Number(name);
-            if(index >= 0){
-                return array[index];
-            }
-            if(object && object[name] != void 0){
-                return object[name];
-            }
-            return '';
-        })
+    // $.format = function(str,object){
+    //     var array = Array.prototype.slice.call(arguments,1);
+    //     return str.replace(/\\?\#{([^{}]+)}\}/gm,function(match,name){
+    //         if(match.charAt(0) == '\\'){
+    //             return match.slice(name);
+    //         }
+    //         var index = Number(name);
+    //         if(index >= 0){
+    //             return array[index];
+    //         }
+    //         if(object && object[name] != void 0){
+    //             return object[name];
+    //         }
+    //         return '';
+    //     })
+    // };
+
+    /**
+     * 字符串模板替换
+     *
+     * @param  {string} template 字符串
+     * @param  {Object|args} data     数据
+     *
+     * @return {string}          结果
+     *
+     * @example
+     *     format('test #{0}', ok) => test ok
+     *     format('test #{0}, ${1}', 'ok', 'no') => test ok, no
+     *     format('test #{name}', {name: 'ok'}) => test ok
+     *     format('test'); => ''
+     */
+    $.format = function (template, data) {
+        var isObj = data && $.isPlainObject(data);
+
+        // 获取数据
+        if (!isObj) {
+            data = Array.prototype.slice.call(arguments, 1);
+        }
+
+        return String(template || '').replace(/\#\{(.+?)\}/g, isObj ? function ($0, $1) {
+            return $.isUndefined(data[$1]) ? '' : data[$1];
+        } : function ($0, $1) {
+            return data[parsInt($1, 0) || 0] || '';
+        });
     };
 
 
