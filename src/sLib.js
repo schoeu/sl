@@ -237,7 +237,9 @@
     //移除字符串中的html标签，但这个方法有缺陷，如果里面有script标签，
     // 会把这些不该显示出来的脚本也显示出来。
     $.stripTags = function(target){
-        return String(target || '').replace(/<[^>]+>/g,'');
+        // 把script标签替换为空
+        // 把textarea文本域标签替换为空
+        return String(target || '').replace(/<(script|textarea)>([\s\S]+?)<\/\1>/g, '').replace(/<[^>]+>/g,'');
     };
     //stripScript方法：移除字符串中所有的script标签，
     // 此方法应在stripTags之前调用
