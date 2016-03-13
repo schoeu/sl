@@ -239,7 +239,7 @@
     $.stripTags = function(target){
         // 把script标签替换为空
         // 把textarea文本域标签替换为空
-        return String(target || '').replace(/<(script|textarea)>([\s\S]+?)<\/\1>/g, '').replace(/<[^>]+>/g,'');
+        return String(target || '').replace(/<(script|textarea)>([\s\S]+?)<\/\1>/gi, '').replace(/<[^>]+>/g,'');
     };
     //stripScript方法：移除字符串中所有的script标签，
     // 此方法应在stripTags之前调用
