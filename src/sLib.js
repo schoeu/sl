@@ -157,8 +157,7 @@
     };
 
     $.isArray = function(arr){
-        return arr != null && typeof arr === "object" &&
-            "splice" in arr && "join" in arr;
+        return Array.isArray(arr);
     };
 
     $.isNaN = function(obj){
