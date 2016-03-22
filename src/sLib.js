@@ -156,9 +156,7 @@
         }
     };
 
-    $.isArray = function(arr){
-        return Array.isArray(arr);
-    };
+    $.isArray = Array.isArray;
 
     $.isNaN = function(obj){
         return obj !== obj;
@@ -265,25 +263,6 @@
                 return String.fromCharCode(parseInt($,10));
             });
     };
-
-    //format("Result is #{0},#{1}",22,33)
-    //format("Result is #{name},#{sex}",{name:22,sex:man})
-    // $.format = function(str,object){
-    //     var array = Array.prototype.slice.call(arguments,1);
-    //     return str.replace(/\\?\#{([^{}]+)}\}/gm,function(match,name){
-    //         if(match.charAt(0) == '\\'){
-    //             return match.slice(name);
-    //         }
-    //         var index = Number(name);
-    //         if(index >= 0){
-    //             return array[index];
-    //         }
-    //         if(object && object[name] != void 0){
-    //             return object[name];
-    //         }
-    //         return '';
-    //     })
-    // };
 
     /**
      * 字符串模板替换
