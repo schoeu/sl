@@ -1,0 +1,32 @@
+{
+  "name": "slib",
+  "version": "0.1.0",
+  "description": "A javascript lib for web dev",
+  "main": "index.js",
+  "directories": {
+    "test": "mocha"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schoeu/sl.git"
+  },
+  "keywords": [
+    "javascript",
+    "lib"
+  ],
+  "author": "schoeu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/schoeu/sl/issues"
+  },
+  "homepage": "https://github.com/schoeu/sl#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "chai": "~3.4.1",
+    "mocha": "~2.3.4",
+  }
+}
