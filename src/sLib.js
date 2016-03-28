@@ -269,9 +269,7 @@
      *
      * @param  {string} template 字符串
      * @param  {Object|args} data     数据
-     *
      * @return {string}          结果
-     *
      * @example
      *     format('test #{0}', ok) => test ok
      *     format('test #{0}, ${1}', 'ok', 'no') => test ok, no
@@ -340,8 +338,6 @@
                     error.call(xhr,xhr,'parseerror',parseErr);
                 }
             })();
-
-
         }else{
             xhr.open(type,url,async);
             xhr.onreadystatechange = function(){
@@ -362,7 +358,6 @@
             xhr.send(null);
         }
     };
-
 
     // merge 函数
     $.extend = function () {
@@ -390,7 +385,6 @@
         }
         return tar;
     };
-
 
     $.extend($.fn, {
         hide: function(){
@@ -624,7 +618,7 @@
                 el.detachEvent("on"+type,fn);
             }
         },
-        bind: function(type,fn){
+        on: function(type,fn){
             this.each(function(){
                 if(this.addEventListener){
                     this.addEventListener(type,fn,false);
@@ -633,7 +627,7 @@
                 }
             });
         },
-        unbind: function(type,fn){
+        off: function(type,fn){
             this.each(function(){
                 if(this.removeEventListener){
                     this.removeEventListener(type,fn,false);
