@@ -4,133 +4,119 @@
 
 ## API
 
-### Array.prototype.distinct
+### 原型扩展
 
-### String.prototype.trim
+#### Array.prototype.distinct
 
-### $.getCookie
+#### String.prototype.trim
 
-### $.setCookie
+### 静态方法
 
-### $.getElementsByClassName
+#### $.getCookie
 
-### $.getUrlParam
+#### $.setCookie
 
-### $.browser
+#### $.getElementsByClassName
 
-### $.nodelist2Array
+#### $.getUrlParam
 
-### $.isArray
+#### $.browser
 
-### $.isNaN
+#### $.nodelist2Array
 
-### $.isNull
+#### $.isArray
 
-### $.isUndefined
+#### $.isNaN
 
-### $.isPlainObject
+#### $.isNull
 
-### $.contains
+#### $.isUndefined
 
-### $.startsWith
+#### $.isPlainObject
 
-### $.endsWith
+#### $.contains
 
-### $.repeat
+#### $.startsWith
 
-### $.camelize
+#### $.endsWith
 
-### $.underscored
+#### $.repeat
 
-### $.dasherize
+#### $.camelize
 
-### $.capitalize
+#### $.underscored
 
-### $.stripTags
+#### $.dasherize
 
-### $.stripScripts
+#### $.capitalize
 
-### $.escapeHTML
+#### $.stripTags
 
-### $.unescapeHTML
+#### $.stripScripts
 
-### $.format
+#### $.escapeHTML
 
-### $.ajax
+#### $.unescapeHTML
 
-### $.extend
+#### $.format
 
-### hide()
+#### $.ajax
 
-### show()
+#### $.extend
 
-### each()
+### 实例方法
 
-### prePend()
+#### hide()
 
-### addClass()
+#### show()
 
-### removeClass()
+#### each()
 
-### children()
+#### prePend()
 
-### setCss()
+#### addClass()
 
-### hasCLass()
+#### removeClass()
 
-### isLast()
+#### children()
 
-### isFirst()
+#### setCss()
 
-### closet()
+#### hasCLass()
 
-### getIndex()
+#### isLast()
 
-### nextEle()
+#### isFirst()
 
-### preEle()
+#### closet()
 
-### nextSiblings()
+#### getIndex()
 
-### preSiblings()
+#### nextEle()
 
-### getCss()
+#### preEle()
 
-### css()
+#### nextSiblings()
 
-### insertAfter()
+#### preSiblings()
 
-### siblings()
+#### getCss()
 
-### offset()
+#### css()
 
-### addEvent()
+#### insertAfter()
 
-### text()
+#### siblings()
 
-### removeEvent()
+#### offset()
 
-### on()
+#### addEvent()
 
-### off()
+#### text()
 
+#### removeEvent()
 
+#### on()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#### off()
 
