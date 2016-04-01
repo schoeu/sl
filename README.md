@@ -18,12 +18,15 @@
 
 ### 静态方法
 
-#### $.getCookie
+#### $.getCookie(string)
 - 类型：字符串
 - 默认：undefined
 - 根据key取cookie中的value值
 
-#### $.setCookie
+#### $.setCookie(key, value, time)
+- 类型：key字符串,value字符串，time毫秒数数字
+- 默认：time默认一天
+- 根据key取cookie中的value值
 
 #### $.getElementsByClassName
 
