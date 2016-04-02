@@ -28,8 +28,10 @@
 - 默认：time默认一天
 - 根据key取cookie中的value值
 
-#### $.getElementsByClassName
-
+#### $.getElementsByClassName(className, context)
+- 类型：className字符串,context字符串
+- 默认：undefined
+- 根据类名查找节点
 #### $.getUrlParam
 
 #### $.browser
