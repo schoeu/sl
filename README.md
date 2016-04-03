@@ -32,8 +32,11 @@
 - 类型：className字符串,context字符串
 - 默认：undefined
 - 根据类名查找节点
-#### $.getUrlParam
-
+#### $.getUrlParam(str)
+- 类型：字符串
+- 默认：""
+- 返回 Object
+- 获取一个URL参数组成的对象
 #### $.browser
 
 #### $.nodelist2Array
