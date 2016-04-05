@@ -93,7 +93,11 @@
             dur = dur || 86400000; //默认为max-age为一天
         document.cookie = idx + "=" + encodeURI(val) + ";expires=" + new Date(Date.now()+dur).toUTCString() + ";";
     };
-
+    
+    
+    /**
+    * 面向现代浏览器，这种方法没必要存在了
+    **/
     $.getElementsByClassName = function(clsName,context){
         var eleObj,a = [],allEl;
         if(typeof document.getElementsByClassName == "function"){
@@ -436,7 +440,8 @@
             }
             return arr;
         },
-        setCss: function(attr,val){
+        
+        _setCss: function(attr,val){
             this.each(function(){
                 if(val){
                     try{
@@ -536,7 +541,8 @@
             }
             return a;
         },
-        getCss: function(attr){
+       
+        _getCss: function(attr){
             var el = this[0];
             try{
                 return window.getComputedStyle(el,null)[attr];//ie8+ w3c
@@ -544,30 +550,14 @@
                 return el.currentStyle(attr);
             }
         },
+        
+        // 统一接口为css。 _setCss,_getCss变为内部方法
         css: function(attr,val){
             var para = arguments.length,el = this[0];
             if(para == 2){
-                this.each(function(){
-                    try{
-                        if(val){
-                            this.style[attr] = val;
-                        }
-                    }catch(e){
-                        console.log(e.message);
-                    }
-                });
+                this._setCss(attr, val);
             }else if(para == 1){
-                if(typeof attr == "object"){
-                    for(var a in attr){
-                        this.setCss(el,a,attr[a]);
-                    }
-                }else if(typeof attr == "string"){
-                    try{
-                        return window.getComputedStyle(el,null)[attr];//ie8+,w3c
-                    }catch(e){
-                        return el.currentStyle(attr);
-                    }
-                }
+                return this._getCss(attr);
             }
         },
         insertAfter: function(newNode){
