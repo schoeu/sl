@@ -464,14 +464,14 @@
         },
         isLast: function(){
             var el = this[0];
-            if(!this.nextEle(el)){
+            if(!this.next(el)){
                 return true;
             }
             return false;
         },
         isFirst: function(){
             var el = this[0];
-            if(!this.preEle(el)){
+            if(!this.prev(el)){
                 return true;
             }
             return false;
@@ -479,8 +479,8 @@
         closet: function(){
             var el = this[0],
                 a = [], p,n;
-            p = this.preEle(el);
-            n = this.nextEle(el);
+            p = this.prev(el);
+            n = this.next(el);
             if(p){a.push(p);}
             if(n){a.push(n);}
             return a;
@@ -493,7 +493,7 @@
             }
             return null;
         },
-        nextEle: function(){
+        next: function(){
             var el = this[0];
             if(typeof el.nextElementSibling == "object"){
                 return el.nextElementSibling;
@@ -507,7 +507,7 @@
                 }
             }
         },
-        preEle: function(el){
+        prev: function(el){
             //var el = this[0];
             if(typeof el.previousElementSibling == "object"){
                 return el.previousElementSibling;
@@ -524,20 +524,20 @@
         nextSiblings: function(){
             var el = this[0];
             if(!el) return [];
-            var a = [], nxt = el.nextEle();
+            var a = [], nxt = el.next();
             while(nxt){
                 a.push(nxt);
-                nxt = nxt.nextEle();
+                nxt = nxt.next();
             }
             return a;
         },
         preSiblings: function(){
             var el = this[0],a = [];
             if(!el) return [];
-            el = this.preEle(el);
+            el = this.prev(el);
             while(el){
                 a.unshift(el);
-                el = this.preEle(el);
+                el = this.prev(el);
             }
             return a;
         },
