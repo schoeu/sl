@@ -38,7 +38,8 @@
 - 返回 Object
 - 获取一个URL参数组成的对象
 #### $.browser
-
+- 返回 Object
+- 获取一个描述浏览器类型的对象
 #### $.nodelist2Array
 
 #### $.isArray
